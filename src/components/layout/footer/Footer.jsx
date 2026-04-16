@@ -1,5 +1,5 @@
 import React from 'react'
-import logo1 from "../../../assets/w-logo.png"
+import logo1 from "../../../assets/w-logo.webp"
 import "./footer.scss"
 import { FaPhoneAlt } from 'react-icons/fa'
 import { MdOutlineMail } from 'react-icons/md'
@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-email">
-          <a className='footer-email-text' href="mailTo: info@eurotruck.uz"><MdOutlineMail />info@rtgparts.uz</a>
+          <a className='footer-email-text' href="mailTo: info@eurotruck.uz"><MdOutlineMail />info@eurotruck.uz</a>
         </div>
 
       </div>
