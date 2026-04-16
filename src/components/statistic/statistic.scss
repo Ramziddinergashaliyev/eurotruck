@@ -1,0 +1,80 @@
+.statistic {
+    padding: 40px 0;
+
+    @media (max-width: 768px) {
+        padding: 24px 0;
+    }
+
+    .brand-swiper {
+        padding-top: 60px;
+        padding-bottom: 60px;
+
+        @media (max-width: 768px) {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            height: 100px;
+            opacity: 0.4;
+            filter: grayscale(1);
+            transition: all 0.4s ease;
+
+            @media (max-width: 768px) {
+                height: 70px;
+                border-radius: 8px;
+            }
+
+            @media (max-width: 480px) {
+                height: 56px;
+            }
+
+            &-active {
+                opacity: 1;
+                filter: grayscale(0);
+            }
+
+            img {
+                max-width: 500px;
+                max-height: 155px;
+                object-fit: contain;
+
+                @media (max-width: 768px) {
+                    max-width: 190px;
+                    max-height: 84px;
+                }
+
+                @media (max-width: 480px) {
+                    max-width: 190px;
+                    max-height: 84px;
+                }
+            }
+        }
+
+        .swiper-pagination {
+            bottom: 12px;
+
+            @media (max-width: 768px) {
+                bottom: 8px;
+            }
+        }
+
+        .swiper-pagination-bullet {
+            width: 6px;
+            height: 6px;
+            background: #aaa;
+            opacity: 1;
+
+            &-active {
+                background: #333;
+                width: 20px;
+                border-radius: 3px;
+                transition: width 0.3s;
+            }
+        }
+    }
+}

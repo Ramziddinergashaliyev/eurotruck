@@ -1,0 +1,86 @@
+import React, { useState } from 'react'
+import logo from "../../../assets/logo.png"
+import logo1 from "../../../assets/exzap.png"
+import "./header.scss"
+import { NavLink } from 'react-router-dom';
+import { IoMdClose } from 'react-icons/io';
+import { FiMenu } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
+
+const Header = () => {
+  const { t, i18n } = useTranslation();
+  const [hide, setHide] = useState(false);
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem("lang", lng);
+  };
+
+  return (
+    <header className='header'>
+      <div className="container">
+        <nav className='header__nav'>
+
+          <NavLink to={"/"} className="header__nav__logo">
+            <img src={logo} alt="header-logo" />
+          </NavLink>
+
+          {hide && (
+            <div className="header__overlay" onClick={() => setHide(false)} />
+          )}
+
+          <ul className={`header__nav__item ${hide ? "header__nav__item-hide" : ""}`}>
+
+            <li className="header__nav__list">
+              <NavLink to={"/about"}>{t("about")}</NavLink>
+            </li>
+
+            <li className="header__nav__list">
+              <NavLink to={"/post"}>{t("suppliers")}</NavLink>
+            </li>
+
+            <li className="header__nav__list">
+              <NavLink to={"/logistic"}>{t("logistic")}</NavLink>
+            </li>
+
+            <li className="header__nav__list">
+              <NavLink to={"/contact"}>{t("contact")}</NavLink>
+            </li>
+
+            <div className="header__lang">
+              {["ru", "en"].map((lng) => (
+                <button
+                  key={lng}
+                  className={`header__lang__btn ${i18n.language === lng ? "active" : ""}`}
+                  onClick={() => changeLanguage(lng)}
+                >
+                  {lng.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
+            <button onClick={() => setHide(false)} className="header__nav__list-btn">
+              <IoMdClose />
+            </button>
+          </ul>
+
+          <div className="header__nav__right">
+            <a href="https://exzap.uz/" target='_blank' >
+              <div className="header__nav__right-logos">
+                <img src={logo1} alt="exzap logo" />
+                <p className="header__nav__right-logos-text">{t("Купить")}</p>
+              </div>
+            </a>
+
+            <button onClick={() => setHide(true)} className='header__nav__right-menu'>
+              <FiMenu />
+            </button>
+          </div>
+
+        </nav>
+      </div>
+    </header>
+  )
+}
+
+export default Header;

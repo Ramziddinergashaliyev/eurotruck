@@ -1,0 +1,158 @@
+import { useEffect, useState } from "react";
+import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
+import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
+import "./contact.scss";
+
+const socialLinks = [
+  { label: "GitHub", href: "#", icon: <FaGithub /> },
+  { label: "LinkedIn", href: "#", icon: <FaLinkedinIn /> },
+  { label: "Twitter", href: "#", icon: <FaTwitter /> },
+];
+
+const phones = [
+  "+99870 202 30 20"
+];
+
+const contactInfo = [
+  { labelKey: "email_label", value: "info@eurotruck.uz", icon: <FiMail /> },
+  { labelKey: "location_label", value: "Узбекистан, Ташкент, ул.Глинка, 14/1", icon: <FiMapPin /> },
+];
+
+export default function Contact() {
+  const { t } = useTranslation();
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [sent, setSent] = useState(false);
+  const [focused, setFocused] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => { setLoading(false); setSent(true); }, 1400);
+  };
+
+  return (
+    <div className="contact-root">
+      <span className="contact-bg__blob contact-bg__blob--1" aria-hidden />
+      <span className="contact-bg__blob contact-bg__blob--2" aria-hidden />
+      <span className="contact-bg__dots" aria-hidden />
+
+      <div className="contact-container container">
+
+        <header className="contact-header">
+          <span className="contact-header__tag">
+            <span className="contact-header__tag-dot" />
+            {t("contact_tag")}
+          </span>
+
+          <h1 className="contact-header__title" dangerouslySetInnerHTML={{ __html: t("contact_title") }} />
+          <p className="contact-header__sub">{t("contact_sub")}</p>
+        </header>
+
+        <div className="contact-grid">
+          <aside className="contact-info">
+            <div className="contact-info__card">
+              <p className="contact-info__eyebrow">{t("contact_details")}</p>
+
+              <div className="contact-info__phones">
+
+                <div className="contact-info__phone-header">
+                  <span className="contact-info__icon"><FiPhone /></span>
+                  <span className="contact-info__label">{t("phone_label")}</span>
+                </div>
+
+                <ul className="contact-info__phone-list">
+                  {phones.map((phone) => (
+                    <li key={phone}>
+                      <a href={`tel:${phone.replace(/\s/g, "")}`} className="contact-info__phone-value">
+                        {phone}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <ul className="contact-info__list">
+                {contactInfo.map((item) => (
+                  <li key={item.labelKey} className="contact-info__item">
+                    <span className="contact-info__icon">{item.icon}</span>
+                    <div>
+                      <span className="contact-info__label">{t(item.labelKey)}</span>
+                      <span className="contact-info__value">{item.value}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="contact-info__divider" />
+              <div className="contact-info__hours">
+                <span className="contact-info__hours-dot" />
+                {t("available_hours")}
+              </div>
+            </div>
+          </aside>
+
+          <main className="contact-form-wrap">
+            {sent ? (
+              <div className="contact-success">
+                <div className="contact-success__icon">✓</div>
+                <h3>{t("message_sent")}</h3>
+                <p>{t("message_sent_sub")}</p>
+                <button
+                  className="contact-success__btn"
+                  onClick={() => { setSent(false); setForm({ name: "", email: "", subject: "", message: "" }); }}
+                >
+                  {t("send_another")}
+                </button>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleSubmit} noValidate>
+                <div className="contact-form__row">
+                  <div className={`contact-form__group ${focused === "name" || form.name ? "is-active" : ""}`}>
+                    <label className="contact-form__label" htmlFor="name">{t("form_name")}</label>
+                    <input id="name" name="name" type="text" required className="contact-form__input"
+                      value={form.name} onChange={handleChange}
+                      onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} />
+                  </div>
+
+                  <div className={`contact-form__group ${focused === "email" || form.email ? "is-active" : ""}`}>
+                    <label className="contact-form__label" htmlFor="email">{t("form_email")}</label>
+                    <input id="email" name="email" type="email" required className="contact-form__input"
+                      value={form.email} onChange={handleChange}
+                      onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} />
+                  </div>
+                </div>
+
+                <div className={`contact-form__group ${focused === "subject" || form.subject ? "is-active" : ""}`}>
+                  <label className="contact-form__label" htmlFor="subject">{t("form_subject")}</label>
+                  <input id="subject" name="subject" type="text" required className="contact-form__input"
+                    value={form.subject} onChange={handleChange}
+                    onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)} />
+                </div>
+
+                <div className={`contact-form__group contact-form__group--textarea ${focused === "message" || form.message ? "is-active" : ""}`}>
+                  <label className="contact-form__label" htmlFor="message">{t("form_message")}</label>
+                  <textarea id="message" name="message" rows={5} required
+                    className="contact-form__input contact-form__input--textarea"
+                    value={form.message} onChange={handleChange}
+                    onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} />
+                </div>
+
+                <button type="submit" className={`contact-form__submit ${loading ? "is-loading" : ""}`} disabled={loading}>
+                  {loading
+                    ? <span className="contact-form__spinner" />
+                    : <><span>{t("send_message")}</span><span className="contact-form__arrow">→</span></>}
+                </button>
+              </form>
+            )}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
