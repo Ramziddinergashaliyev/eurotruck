@@ -12,7 +12,7 @@ const socialLinks = [
 ];
 
 const phones = [
-  "+99870 202 30 20"
+  "+998 71 202 46 63"
 ];
 
 const contactInfo = [

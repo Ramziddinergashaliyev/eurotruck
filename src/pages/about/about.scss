@@ -73,12 +73,19 @@
     }
 
     @media (max-width:500px) {
+        padding-top: 20px;
+
         &__info-imgs {
             grid-template-columns: 1fr;
         }
 
+        &-title {
+            padding: 5px 0px;
+        }
+
         &__info-title {
             font-size: 24px;
+            line-height: 25px;
         }
 
         &__top__right-text {
